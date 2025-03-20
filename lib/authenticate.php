@@ -10,4 +10,6 @@ if ($conn->connect_error) {
   exit("Error connecting to DB: ". $conn->connect_error);
 }
 
+echo("f u");
+
 ?>
