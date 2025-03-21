@@ -1,9 +1,5 @@
 <?php
-  session_start();
-  
-  if (!isset($_SESSION["sid"])) {
-    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/index.php");
-  }
+  include("lib/check_auth.php");
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +17,21 @@
 </head>
 
 <body>
-  <h1>Xin chào</h1>
+  <?php
+    include("components/header.php")
+  ?>
+
+  <h1 class="text-2xl text-center font-bold mt-16">Xin chào,
+    <?= htmlspecialchars($_SESSION["name_last"] . " " . $_SESSION["name_first"]) ?></h1>
+
+  <div class="w-full flex flex-row p-8 gap-4">
+    <div class="flex-grow bg-white border-1 rounded">
+      <h3 class="text-center text-xl font-bold">Các bài tập</h3>
+    </div>
+    <div class="flex-grow bg-white border-1 rounded">
+      <h3 class="text-center text-xl font-bold">Các môn học</h3>
+    </div>
+  </div>
 </body>
 
 </html>

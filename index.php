@@ -54,8 +54,6 @@
         nhập</button>
     </form>
   </div>
-
-  <script src="js/index.js"></script>
 </body>
 
 </html>
