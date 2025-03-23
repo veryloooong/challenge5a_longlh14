@@ -14,7 +14,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cổng thông tin sinh viên</title>
-  <link rel="stylesheet" href="css/main.css">
   <link rel="icon" type="image/x-icon" href="img/favicon.ico">
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://kit.fontawesome.com/8cc5db2d2e.js" crossorigin="anonymous"></script>
@@ -39,7 +38,7 @@
         Mật khẩu
         <div
           class="flex flex-row p-4 w-full border-2 border-gray-300 rounded items-center gap-2 mb-4 cursor-text">
-          <i class="fa-solid fa-key"></i>
+          <i class="fa-solid fa-lock"></i>
           <input type="password" name="password" id="password" placeholder="Mật khẩu"
             class="flex-grow h-full focus:outline-none" required>
         </div>
