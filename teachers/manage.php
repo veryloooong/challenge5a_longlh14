@@ -68,6 +68,7 @@
     </table>
 
     <button class="bg-blue-500 text-white cursor-pointer rounded p-4">Thêm sinh viên</button>
+    <!-- TODO: add add student functionality -->
   </div>
 </body>
 
