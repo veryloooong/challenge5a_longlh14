@@ -46,10 +46,29 @@ $("document").ready(function () {
   });
 
   passConfirmButton.click(function () {
-    const passwordOld = $(".pass-change-old");
-    const passwordNew = $(".pass-change-new");
-    const passwordConfirm = $(".pass-change-confirm");
+    const passwordOld = $(".pass-change-old").val();
+    const passwordNew = $(".pass-change-new").val();
+    const passwordConfirm = $(".pass-change-confirm").val();
+    const passwordAlert = $(".pass-change-alert");
 
-    // TODO
+    if (passwordOld === passwordNew) {
+      passwordAlert.html("Mật khẩu mới phải khác mật khẩu cũ");
+      passwordAlert.show();
+    } else if (passwordNew !== passwordConfirm) {
+      passwordAlert.html("Mật khẩu xác nhận không khớp");
+      passwordAlert.show();
+    } else if (
+      passwordNew.length < 8 ||
+      !/[A-Z]/.test(passwordNew) ||
+      !/[a-z]/.test(passwordNew) ||
+      !/[0-9]/.test(passwordNew) ||
+      !/[!@#$%^&*()\-_+=]/.test(passwordNew)
+    ) {
+      passwordAlert.html("Mật khẩu mới chưa đáp ứng bảo mật");
+      passwordAlert.show();
+    } else {
+      passwordAlert.hide();
+      $("#form-change-pass").trigger("submit");
+    }
   });
 });

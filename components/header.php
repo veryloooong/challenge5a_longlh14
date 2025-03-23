@@ -6,7 +6,21 @@
     <li>
       <a href="/personal.php" class="hover:underline">Thông tin cá nhân</a>
     </li>
-    <li>2</li>
+    <li>
+      <a href="/users.php" class="hover:underline">Các người dùng</a>
+    </li>
+    <?php
+      if ($_SESSION["is_teacher"]) {
+        echo("
+          <li>
+            <a href=\"/teachers/manage.php\" class=\"hover:underline\">Quản lý sinh viên</a>
+          </li>
+          <li>
+            <a href=\"/teachers/homework.php\" class=\"hover:underline\">Bài tập</a>
+          </li>
+        ");
+      }
+    ?>
     <li>
       <a href="/lib/logout.php" class="hover:underline">Đăng xuất</a>
     </li>
