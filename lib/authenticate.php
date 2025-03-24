@@ -27,6 +27,14 @@
     exit();
   }
 
+  /* @type int $id
+   * @type string $password_hash
+   * @type bool $is_teacher
+   * @type string $email
+   * @type string $phone
+   * @type string $name_first
+   * @type string $name_last
+   */
   $stmt->bind_result($id, $password_hash, $is_teacher, $email, $phone, $name_first, $name_last);
   $stmt->fetch();
 
