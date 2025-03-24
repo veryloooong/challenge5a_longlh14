@@ -1,18 +1,15 @@
 <?php
   include("../lib/check_auth.php");
-
   if (!isset($_SESSION["is_teacher"]) || !$_SESSION["is_teacher"]) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/index.php");
   }
 
   $conn = include("../lib/database.php");
-
   $stmt = $conn->prepare("SELECT name_first, name_last, username, email, phone FROM users WHERE is_teacher = 0 ORDER BY name_first");
   if (!$stmt) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/error.php?errmsg=Lỗi+hệ+thống");
     exit();
   }
-
   if (!$stmt->execute()) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/error.php?errmsg=Lỗi+hệ+thống");
     exit();
@@ -135,11 +132,12 @@
           <div class="flex flex-row gap-2 items-center justify-center">
             <button
               class="rounded bg-blue-500 px-4 py-2 text-white cursor-pointer js-edit-student-popup"
+              type="button"
               value="<?= $student["username"] . ":" . $student["email"] . ":" . $student["phone"] . ":" . $student["name_first"] . ":" . $student["name_last"] ?>">
               Chỉnh sửa</button>
             <button
               class="rounded bg-red-500 px-4 py-2 text-white cursor-pointer js-delete-student-popup"
-              value="<?= $student["username"] ?>">Xóa</button>
+              type="button" value="<?= $student["username"] ?>">Xóa</button>
           </div>
         </td>
       </tr>
