@@ -9,6 +9,9 @@
     exit();
   }
   $conn = include("../database.php");
+  $username = preg_replace("/[^a-z0-9_]+/", "", $_POST["username"]);
+  $name_first = preg_replace("/[^[:alnum:][:space:]]/u", '', $_POST["name_first"]);
+  $name_last = preg_replace("/[^[:alnum:][:space:]]/u", '', $_POST["name_last"]);
   
   $stmt = $conn->prepare("INSERT INTO users (username, password, is_teacher, email, phone, name_first, name_last) VALUES (?, ?, 0, ?, ?, ?, ?)");
   if (!$stmt) {
@@ -17,12 +20,12 @@
   }
   $stmt->bind_param(
     "ssssss",
-    $conn->real_escape_string($_POST["username"]),
+    $conn->real_escape_string($username),
     password_hash($_POST["password"], PASSWORD_DEFAULT),
     $conn->real_escape_string($_POST["email"]),
     $conn->real_escape_string($_POST["phone"]),
-    $conn->real_escape_string($_POST["name_first"]),
-    $conn->real_escape_string($_POST["name_last"]),
+    $conn->real_escape_string($name_first),
+    $conn->real_escape_string($name_last),
   );
   if (!$stmt->execute()) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/error.php?errmsg=Lỗi+hệ+thống");

@@ -57,6 +57,61 @@
       </form>
     </dialog>
 
+    <dialog id="dialog-edit-student" title="Sửa thông tin sinh viên"
+      class="fixed m-auto rounded border border-slate-400 p-8">
+      <h3 class="text-center font-semibold text-lg mb-4">Sửa thông tin sinh viên</h3>
+      <form class="flex flex-col items-start gap-2" id="form-edit-student"
+        action="/lib/teachers/edit.php" method="POST">
+        <input type="hidden" name="username_edit" id="username_edit" required>
+        <fieldset class="flex flex-row gap-2 items-center w-full">
+          <label for="name_last_edit">
+            Họ và tên đệm
+            <div
+              class="flex flex-row p-2 w-full border-2 border-gray-300 rounded items-center gap-2 mb-4 cursor-text">
+              <i class="fa-solid fa-user"></i>
+              <input type="text" name="name_last_edit" id="name_last_edit"
+                placeholder="Họ và tên đệm" class="flex-grow h-full focus:outline-none" required>
+            </div>
+          </label>
+          <label for="name_first_edit">
+            Tên
+            <div
+              class="flex flex-row p-2 w-full border-2 border-gray-300 rounded items-center gap-2 mb-4 cursor-text">
+              <i class="fa-solid fa-user"></i>
+              <input type="text" name="name_first_edit" id="name_first_edit" placeholder="Tên"
+                class="flex-grow h-full focus:outline-none" required>
+            </div>
+          </label>
+        </fieldset>
+        <fieldset class="flex flex-row gap-2 items-center w-full">
+          <label for="phone_edit">
+            Số điện thoại
+            <div
+              class="flex flex-row p-2 w-full border-2 border-gray-300 rounded items-center gap-2 mb-4 cursor-text">
+              <i class="fa-solid fa-phone"></i>
+              <input type="text" name="phone_edit" id="phone_edit" placeholder="Số điện thoại"
+                class="flex-grow h-full focus:outline-none" required>
+            </div>
+          </label>
+          <label for="email_edit">
+            Email
+            <div
+              class="flex flex-row p-2 w-full border-2 border-gray-300 rounded items-center gap-2 mb-4 cursor-text">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="email" name="email_edit" id="email_edit" placeholder="Email"
+                class="flex-grow h-full focus:outline-none" required>
+            </div>
+          </label>
+        </fieldset>
+        <fieldset class="flex flex-row items-center justify-end gap-2 w-full">
+          <button type="submit"
+            class="bg-blue-500 text-white px-4 py-2 font-semibold cursor-pointer rounded js-edit-student">Sửa</button>
+          <button formmethod="dialog" type="button"
+            class="bg-red-500 text-white px-4 py-2 font-semibold cursor-pointer rounded js-edit-student-close">Hủy</button>
+        </fieldset>
+      </form>
+    </dialog>
+
     <table class="self-center border-collapse border border-slate-400 my-4 w-full">
       <tr class="bg-blue-500 text-white font-bold">
         <th class="border border-slate-400 px-4 py-2">Họ và tên</th>
@@ -78,10 +133,13 @@
         </td>
         <td class="border border-slate-400 px-4 py-2">
           <div class="flex flex-row gap-2 items-center justify-center">
-            <button class="rounded bg-blue-500 px-4 py-2 text-white cursor-pointer">
+            <button
+              class="rounded bg-blue-500 px-4 py-2 text-white cursor-pointer js-edit-student-popup"
+              value="<?= $student["username"] . ":" . $student["email"] . ":" . $student["phone"] . ":" . $student["name_first"] . ":" . $student["name_last"] ?>">
               Chỉnh sửa</button>
             <button
-              class="rounded bg-red-500 px-4 py-2 text-white cursor-pointer js-delete-student-popup" value="<?= $student["username"] ?>">Xóa</button>
+              class="rounded bg-red-500 px-4 py-2 text-white cursor-pointer js-delete-student-popup"
+              value="<?= $student["username"] ?>">Xóa</button>
           </div>
         </td>
       </tr>

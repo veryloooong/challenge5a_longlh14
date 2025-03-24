@@ -43,6 +43,37 @@ $("document").ready(function () {
   });
 
   // INFO: edit student
+  const editDialog = document.querySelector("#dialog-edit-student");
+  editDialog.addEventListener("click", (e) => {
+    const dialogDimensions = editDialog.getBoundingClientRect();
+    if (
+      e.clientX < dialogDimensions.left ||
+      e.clientX > dialogDimensions.right ||
+      e.clientY < dialogDimensions.top ||
+      e.clientY > dialogDimensions.bottom
+    ) {
+      editDialog.close();
+    }
+  });
+
+  $(".js-edit-student-popup").click(function () {
+    const vals = $(this).val().split(":");
+    const keys = [
+      "username_edit",
+      "email_edit",
+      "phone_edit",
+      "name_first_edit",
+      "name_last_edit",
+    ];
+
+    keys.forEach((key, i) => {
+      $(`#${key}`).val(vals[i]);
+    });
+    editDialog.showModal();
+  });
+  $(".js-edit-student-close").click(function () {
+    editDialog.close();
+  });
 
   // INFO: delete student
   const deleteDialog = document.querySelector("#dialog-delete-student");
