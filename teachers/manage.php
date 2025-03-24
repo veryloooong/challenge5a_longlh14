@@ -7,7 +7,7 @@
 
   $conn = include("../lib/database.php");
 
-  $stmt = $conn->prepare("SELECT name_first, name_last, username, email, phone FROM users WHERE is_teacher = 0 ORDER BY name_first ASC");
+  $stmt = $conn->prepare("SELECT name_first, name_last, username, email, phone FROM users WHERE is_teacher = 0 ORDER BY name_first");
   if (!$stmt) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/error.php?errmsg=Lỗi+hệ+thống");
     exit();
@@ -45,9 +45,9 @@
     <dialog id="dialog-delete-student" title="Xóa sinh viên"
       class="fixed m-auto rounded border border-slate-400 p-8">
       <h3 class="text-center font-semibold text-lg mb-4">Xóa sinh viên</h3>
-      <form class="flex flex-col items-start gap-2">
+      <form class="flex flex-col items-start gap-2" action="/lib/teachers/delete.php" method="POST">
         <p>Bạn có chắc chắn muốn xóa sinh viên khỏi lớp không?</p>
-        <!-- TODO: finish delete student function -->
+        <input type="hidden" name="student_username" id="student_username" value="" required>
         <fieldset class="flex flex-row items-center justify-end gap-2 w-full">
           <button type="submit"
             class="bg-red-500 text-white px-4 py-2 font-semibold cursor-pointer rounded js-delete-student">Xóa</button>
@@ -81,7 +81,7 @@
             <button class="rounded bg-blue-500 px-4 py-2 text-white cursor-pointer">
               Chỉnh sửa</button>
             <button
-              class="rounded bg-red-500 px-4 py-2 text-white cursor-pointer js-delete-student-popup">Xóa</button>
+              class="rounded bg-red-500 px-4 py-2 text-white cursor-pointer js-delete-student-popup" value="<?= $student["username"] ?>">Xóa</button>
           </div>
         </td>
       </tr>

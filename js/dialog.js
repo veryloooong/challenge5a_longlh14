@@ -47,18 +47,20 @@ $("document").ready(function () {
   // INFO: delete student
   const deleteDialog = document.querySelector("#dialog-delete-student");
   deleteDialog.addEventListener("click", (e) => {
-    const dialogDimensions = addDialog.getBoundingClientRect();
+    const dialogDimensions = deleteDialog.getBoundingClientRect();
     if (
       e.clientX < dialogDimensions.left ||
       e.clientX > dialogDimensions.right ||
       e.clientY < dialogDimensions.top ||
       e.clientY > dialogDimensions.bottom
     ) {
-      addDialog.close();
+      deleteDialog.close();
     }
   });
 
   $(".js-delete-student-popup").click(function () {
+    const studentUsername = $(this).val();
+    $("#student_username").val(studentUsername);
     deleteDialog.showModal();
   });
   $(".js-delete-student-close").click(function () {
