@@ -51,9 +51,10 @@
           <?= htmlspecialchars($user["is_teacher"] ? "Giáo viên" : "Sinh viên") ?></td>
         <td class="border border-slate-400 px-4 py-2">
           <div class="flex flex-row gap-2 items-center justify-center">
-            <button
-              class="rounded bg-blue-500 px-4 py-2 text-white cursor-pointer js-delete-student-popup"
-              type="button" value="<?= $user["username"] ?>">Xem</button>
+            <a href="/users/view.php?username=<?= htmlspecialchars($user["username"]) ?>">
+              <button class="rounded bg-blue-500 px-4 py-2 text-white cursor-pointer"
+                type="button">Xem</button>
+            </a>
           </div>
         </td>
       </tr>

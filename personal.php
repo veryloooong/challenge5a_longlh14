@@ -1,5 +1,7 @@
 <?php
   include("lib/check_auth.php");
+
+  // TODO: add avatars
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +43,7 @@
         <div><?= htmlspecialchars($_SESSION['is_teacher'] == 1 ? "Giáo viên" : "Sinh viên") ?></div>
       </div>
 
-      <form action="lib/personal/change_info.php" method="POST" class="form-change-info hidden"
+      <form action="/lib/personal/change_info.php" method="POST" class="form-change-info hidden"
         id="form-change-info">
         <div class="grid grid-cols-2 gap-4 items-center">
           <div class="font-semibold">Email:</div>
@@ -56,7 +58,7 @@
         </div>
       </form>
 
-      <form action="lib/personal/change_pass.php" method="POST" class="form-change-pass hidden"
+      <form action="/lib/personal/change_pass.php" method="POST" class="form-change-pass hidden"
         id="form-change-pass">
         <div class="grid grid-cols-2 gap-4 items-center">
           <div class="font-semibold">Mật khẩu cũ:</div>
