@@ -1,5 +1,17 @@
 <?php
   include("lib/check_auth.php");
+  $conn = include("lib/database.php");
+  $stmt = $conn->prepare("SELECT messages.*, CONCAT(users.name_last, ' ', users.name_first) AS name FROM messages JOIN users ON messages.user_from = users.id WHERE messages.user_to = ?");
+  if (!$stmt) {
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/error.php?errmsg=Lỗi+hệ+thống");
+    exit();
+  }
+  $stmt->bind_param("i", $_SESSION["sid"]);
+  if (!$stmt->execute()) {
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/error.php?errmsg=Lỗi+hệ+thống");
+    exit();
+  }
+  $messages = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -25,11 +37,22 @@
 
   <div class="w-full flex flex-row p-8 gap-4">
     <div class="flex-grow bg-white border-1 rounded">
-      <h3 class="text-center text-xl font-bold">Các bài tập</h3>
+      <h3 class="text-center text-xl font-bold">Tin nhắn</h3>
+      <?php foreach ($messages as $message): ?>
+      <div class="flex justify-between border border-slate-400 rounded p-3 m-4">
+        <div class="flex flex-col items-start gap-2 flex-grow">
+          <span class="font-bold"><?= htmlspecialchars($message["name"]) ?></span>
+          <p class="break-words break-all overflow-hidden" id="message-<?= $message["id"] ?>">
+            <?= htmlspecialchars($message["content"]) ?></p>
+        </div>
+        <span
+          class="italic whitespace-nowrap"><?= htmlspecialchars($message["created_at"]) ?></span>
+      </div>
+      <?php endforeach; ?>
     </div>
-    <div class="flex-grow bg-white border-1 rounded">
+    <!-- <div class="flex-grow bg-white border-1 rounded">
       <h3 class="text-center text-xl font-bold">Các môn học</h3>
-    </div>
+    </div> -->
   </div>
 </body>
 

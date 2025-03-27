@@ -1,1 +1,5 @@
 webserver/
+uploads/teachers/*
+!uploads/teachers/stub
+uploads/students/*
+!uploads/students/stub
