@@ -12,6 +12,16 @@
     exit();
   }
   $messages = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+  $stmt = $conn->prepare("SELECT * FROM homework");
+  if (!$stmt) {
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/error.php?errmsg=Lỗi+hệ+thống");
+    exit();
+  }
+  if (!$stmt->execute()) {
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/error.php?errmsg=Lỗi+hệ+thống");
+    exit();
+  }
+  $assignments = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -50,9 +60,28 @@
       </div>
       <?php endforeach; ?>
     </div>
-    <!-- <div class="flex-grow bg-white border-1 rounded">
-      <h3 class="text-center text-xl font-bold">Các môn học</h3>
-    </div> -->
+    <?php if (!$_SESSION["is_teacher"]): ?>
+    <div class="flex-grow bg-white border-1 rounded">
+      <h3 class="text-center text-xl font-bold">Bài tập</h3>
+      <?php foreach ($assignments as $assignment): ?>
+      <div class="flex justify-between border border-slate-400 rounded p-3 m-4">
+        <div class="flex flex-col items-start gap-2 flex-grow">
+          <h3 class="font-bold"><?= htmlspecialchars($assignment['title']) ?></h3>
+          <p class="break-words break-all overflow-hidden">
+            <?= htmlspecialchars($assignment['description']) ?></p>
+        </div>
+        <div class="w-max">
+          <a href="/students/homework_detail.php?id=<?= $assignment['id'] ?>">
+            <button
+              class="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer whitespace-nowrap">
+              Xem chi tiết
+            </button>
+          </a>
+        </div>
+      </div>
+      <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
   </div>
 </body>
 
