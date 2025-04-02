@@ -76,7 +76,7 @@
         <div class="mb-4">
           <label class="block mb-2">File đính kèm:</label>
           <input type="file" name="homework_files[]" multiple class="w-full p-2 border rounded">
-          <p>Kích thước mỗi file tối đa 5MB</p>
+          <p>Kích thước mỗi file tối đa 5MB. Chỉ nhận PDF</p>
         </div>
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer">
           Thêm bài tập

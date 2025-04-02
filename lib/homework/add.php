@@ -4,11 +4,7 @@
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/index.php");
     exit();
   }
-  if (!isset($_FILES["homework_files"]["error"])) {
-    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/error.php?errmsg=Lỗi+hệ+thống");
-    exit();
-  }
-  
+
   // check
   $target_dir = "../../uploads/teachers/";
   for ($i = 0; $i < count($_FILES["homework_files"]["name"]); $i++) {

@@ -37,6 +37,22 @@
   while ($row = $result->fetch_assoc()) {
     $files[] = $row['path'];
   }
+
+  $stmt = $conn->prepare("SELECT sf.path FROM submissions_files AS sf JOIN submissions AS s ON sf.submission_id = s.id WHERE s.assignment_id = ? AND s.student_id = ?");
+  if (!$stmt) {
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/error.php?errmsg=Lỗi+hệ+thống");
+    exit();
+  }
+  $stmt->bind_param("ii", $_GET["id"], $_SESSION["sid"]);
+  if (!$stmt->execute()) {
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . "/error.php?errmsg=Lỗi+hệ+thống");
+    exit();
+  }
+  $result = $stmt->get_result();
+  $submission_files = [];
+  while ($row = $result->fetch_assoc()) {
+    $submission_files[] = $row['path'];
+  }
 ?>
 
 <!DOCTYPE html>
@@ -89,16 +105,32 @@
 
   <div class="mx-auto mt-4 w-full">
     <div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto border-1 w-full">
+      <?php if (empty($submission_files)): ?>
       <form action="/lib/homework/submit.php" method="POST"
-        class="w-full flex flex-row gap-2 form-message-send">
+        class="w-full flex flex-row gap-2 form-message-send" enctype="multipart/form-data">
         <input type="hidden" name="assignment_id" id="assignment_id"
           value="<?= $assignment["id"] ?>">
-        <input type="file" name="files[]" id="files" class="p-2 border rounded flex-1" multiple
-          required>
+        <input type="file" name="submission_files[]" id="files" class="p-2 border rounded flex-1"
+          multiple required>
         <button type="submit" class="text-white bg-blue-500 px-4 py-2 rounded cursor-pointer">Gửi
           bài tập</button>
       </form>
-      <p>Kích thước mỗi file tối đa 5MB</p>
+      <p>Kích thước mỗi file tối đa 5MB. Chỉ nộp PDF</p>
+      <?php else: ?>
+      <h3 class="font-semibold mb-2">Bài làm đã nộp:</h3>
+      <ul class="list-none">
+        <?php foreach ($submission_files as $file): ?>
+        <li class="mb-2">
+          <a href="<?= htmlspecialchars($file) ?>"
+            class="flex items-center gap-2 text-blue-600 hover:text-blue-800 break-words break-all"
+            target="_blank">
+            <i class="fas fa-file"></i>
+            <?= htmlspecialchars(basename($file)) ?>
+          </a>
+        </li>
+        <?php endforeach; ?>
+      </ul>
+      <?php endif; ?>
     </div>
   </div>
 </body>

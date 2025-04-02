@@ -37,7 +37,7 @@
     $files[] = $row['path'];
   }
 
-  $stmt = $conn->prepare("SELECT submissions.*, CONCAT(users.name_last, ' ', users.name_first) FROM submissions JOIN users ON submissions.student_id = users.id WHERE assignment_id = ?");
+  $stmt = $conn->prepare("SELECT submissions.*, CONCAT(users.name_last, ' ', users.name_first) AS name FROM submissions JOIN users ON submissions.student_id = users.id WHERE assignment_id = ?");
   if (!$stmt) {
     header("Location: http://" . $_SERVER["HTTP_HOST"] . "/error.php?errmsg=Lỗi+hệ+thống");
     exit();
@@ -122,8 +122,20 @@
       <h3 class="text-center font-semibold text-lg">Bài làm của sinh viên</h3>
 
       <?php foreach ($submissions as $message): ?>
-      <div class="flex justify-between border border-slate-400 rounded p-3 mt-2 min-h-28">
-        <?php print_r($message) ?>
+      <div class="justify-between border border-slate-400 rounded p-3 mt-2 min-h-28">
+        <h3 class="font-semibold mb-2"><?= $message["name"] ?></h3>
+        <ul class="list-none">
+          <?php foreach ($message["paths"] as $file): ?>
+          <li class="mb-2">
+            <a href="<?= htmlspecialchars($file) ?>"
+              class="flex items-center gap-2 text-blue-600 hover:text-blue-800 break-words break-all"
+              target="_blank">
+              <i class="fas fa-file"></i>
+              <?= htmlspecialchars(basename($file)) ?>
+            </a>
+          </li>
+          <?php endforeach; ?>
+        </ul>
       </div>
       <?php endforeach; ?>
     </div>
